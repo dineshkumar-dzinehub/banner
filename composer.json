@@ -1,11 +1,12 @@
 {
     "name": "dzinehub/banners",
-    "description": "N/A",
+    "description": "Module for banner in homepage",
     "config": {
         "sort-packages": true
     },
     "require": {
         "php": ">=7.3.0",
+        "dzinehub/core" : ">=1.0.0",
         "magento/framework": "*"
     },
     "type": "magento2-module",
