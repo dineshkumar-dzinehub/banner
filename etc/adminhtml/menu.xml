@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Dzinehub, Inc. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dzinehub_Banners::dzbanners" 
+	        	 title="Banners" 
+	        	 translate="title" 
+	        	 module="Dzinehub_Banners" 
+	        	 sortOrder="10" 
+	        	 parent="Dzinehub_Core::dzinehub" 
+	        	 action="dzbanners/index" 
+	        	 resource="Dzinehub_Banners::dzbanners"/>
+    </menu>
+</config>

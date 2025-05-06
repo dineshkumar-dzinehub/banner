@@ -1,0 +1,79 @@
+<?php $bannerCollection = $block->_bannerCollection();$desktopPath = 'dzinehub/desktopbanners/';$mobilePath = 'dzinehub/mobilebanners/'; ?>
+<?php if (count($bannerCollection)): ?>
+	<div class="dz_banner" id="desktop_dzbannerinfo">
+		<!----banner preview image starts---->
+	    <?php foreach ($bannerCollection as $_banner):?>                  
+	      <picture class="banner-preview">
+	           <?php if($_banner->getMobileImage()):?>   
+	           <?php list($width,$height)=getimagesize($this->getMediaUrl().$mobilePath.$_banner->getMobileImage()); ?> 
+	           <source 
+	              media="(max-width: 525px)"
+	              class="desktop_image_load" id="mobile_preview" srcset="<?php echo $this->getMediaUrl().$mobilePath.$_banner->getMobileImage() ?>" alt="mobile banner preview" width="<?php echo $width; ?>" height="<?php echo $height; ?>" data-no-retina/>
+	          <?php endif;?>
+	          <?php if($_banner->getDesktopImage()):?>
+	            <?php list($width,$height)=getimagesize($this->getMediaUrl().$desktopPath.$_banner->getDesktopImage()); ?>
+	           <source 
+	              media="(min-width: 526px)"
+	              class="desktop_image_load" id="desktop_preview" srcset="<?php echo $this->getMediaUrl().$desktopPath.$_banner->getDesktopImage() ?>" alt="desktop banner preview" width="<?php echo $width; ?>" height="<?php echo $height; ?>">
+	          <?php endif;?> 
+	           <img class="desktop_image_load" src="<?php echo $this->getMediaUrl().$desktopPath.$_banner->getDesktopImage() ?>" width="<?php echo $width; ?>" height="<?php echo $height; ?>" 
+	           alt="default banner preview" data-no-retina>
+	      </picture>
+	    <?php break; endforeach;?>
+	    <!----banner preview image ends---->
+
+		<ul class="dz_bannerdesktoplist owl-carousel owl-theme">
+			<?php foreach ($bannerCollection as $_banner):?>
+        
+		        <?= /* @escapeNotVerified */'<li class="banner-items">' ?>
+		            <a href="<?= /* @escapeNotVerified */ $_banner->getUrl() ?>" class="banner_name" tabindex="-1">
+		              <picture>
+		                 <?php if($_banner->getMobileImage()):?>   
+		                 <?php list($width,$height)=getimagesize($this->getMediaUrl().$mobilePath.$_banner->getMobileImage()); ?> 
+		                 <source 
+		                    media="(max-width: 525px)" class="mobile-banner" srcset="<?php echo $this->getMediaUrl().$mobilePath.$_banner->getMobileImage() ?>" alt="mobile banner" width="<?php echo $width; ?>" height="<?php echo $height; ?>"/>
+		                <?php endif;?>
+		                <?php if($_banner->getDesktopImage()):?>
+		                  <?php list($width,$height)=getimagesize($this->getMediaUrl().$desktopPath.$_banner->getDesktopImage()); ?>
+		                 <source 
+		                    media="(min-width: 526px)" class="desktop-banner" srcset="<?php echo $this->getMediaUrl().$desktopPath.$_banner->getDesktopImage() ?>" alt="desktop banner" width="<?php echo $width; ?>" height="<?php echo $height; ?>">
+		                <?php endif;?>
+		                 <img class="default-banner lazyload" data-src="<?php echo $this->getMediaUrl().$desktopPath.$_banner->getDesktopImage() ?>" alt="default banner" width="<?php echo $width; ?>" height="<?php echo $height; ?>" data-no-retina>
+		               </picture>
+		            </a>
+		        <?= '</li>'?>
+		         
+		    <?php endforeach;?>
+		</ul>
+		
+	</div>
+<?php endif;?>
+
+<script type="text/javascript">
+	require(
+	['jquery','owlcarousel',],
+		function(){
+			'use strict';jQuery.noConflict();
+		function desktop_banner(){
+			jQuery(".dz_bannerdesktoplist.owl-carousel").owlCarousel({loop:true,autoplay: true,autoplayTimeout:3000,autoplayHoverPause: true,responsiveClass:true,items:1,margin:0,nav:true,navText:false,dots:true,dotsData:false})
+		}
+		desktop_banner();
+		window.addEventListener("resize",desktop_banner);
+		}
+	);
+	require(
+		["jquery",],
+		function(){
+			function bannerPreload(){
+        		jQuery(window).on('load',function(){
+		        jQuery('.banner-preview').remove();
+		        jQuery(".dz_banner .dz_bannerdesktoplist").css("position","static");
+		        jQuery(".dz_bannerdesktoplist").show();
+                jQuery(".dz_bannermobilelist").show();
+		    	});
+      		}
+	      bannerPreload();
+	      window.addEventListener("resize",bannerPreload);
+		}
+	);
+</script>
